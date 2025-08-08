@@ -3,6 +3,7 @@ using System.Globalization;
 
 namespace UniqueIslands
 {
+
     class Program
     {
         static int origin_row = -1;
@@ -12,67 +13,116 @@ namespace UniqueIslands
         static int uniqueIslands = 0;
 
 
-        public static void checkLoop(int[][] grid, int row, int col)
+        public static void checkLoop(int[, ,] grid, int row, int col)
         {
-            
-            if (grid[row][col] == -1)
-            {
-                return ;
-            }
-            if ((grid[row][col]/10) == origin_row && grid[row][col]%10 == origin_col)
-            {
-                grid[row][col] = -1;
-                uniqueIslands++;
-                return ;
-            }
-            
-            checkLoop(grid, grid[row][col]/10,grid[row][col] % 10);
 
-            return ;
+            if (grid[row, col, 0] == -1 && grid[row, col, 1] == -1)
+            {
+                return;
+            }
+            if (grid[row,col,0] == origin_row && grid[row, col, 1] == origin_col)
+            {
+                grid[row, col, 0] = -1;
+                grid[row, col, 1] = -1;
+                uniqueIslands++;
+                return;
+            }
+
+            checkLoop(grid, grid[row,col,0], grid[row, col, 1]);
+
+            return;
         }
         public static void Main(string[] args)
         {
 
 
+            //int[, ,] grid = new int[4, 4, 2]
+            //{
+            //    { { -1,-1},{-1,-1 },{0,3 },{0,2 } },
+            //    { {-1,-1 }, {-1,-1 }, {-1,-1 }, {-1,-1 } },
+            //    { {-1,-1 }, {-1,-1 }, {-1,-1 }, {-1,-1} },
+            //    { { -1,-1}, {-1,-1 }, {-1, -1 }, {-1,-1 } }
 
-            //int[][] grid = new int[4][] {
-            //    new int[] { -1, -1, 03, 02 },
-            //    new int[] { -1, -1, -1, -1 },
-            //    new int[] { -1, -1, -1, -1 },
-            //    new int[] { -1, -1, -1, -1 }
             //};
 
-            int[][] grid = new int[5][]
+            //int[,,] grid = new int[5, 7, 2]
+            //{
+            //    { {-1,-1}, {-1,-1}, {0,3}, {-1,-1}, {-1,-1},{-1,-1},{-1,-1} },
+            //    { {-1,-1}, {3,0}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {4,6} },
+            //    { {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+            //    { {4,1}, {1,1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+            //    { {-1,-1}, {3,1}, {-1,-1}, {-1,-1}, {-1,-1}, {1,6}, {4,5} }
+
+
+            //};
+
+//            int[,,] grid = new int[6, 8, 2]
+//{
+//    { {-1,-1}, {-1,-1}, {1,5}, {-1,-1}, {2,0}, {-1,-1}, {-1,-1}, {-1,-1} },
+//    { {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {3,2}, {-1,-1}, {-1,-1} },
+//    { {4,1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+//    { {-1,-1}, {-1,-1}, {4,4}, {-1,-1}, {-1,-1}, {-1,-1}, {5,0}, {-1,-1} },
+//    { {-1,-1}, {0,4}, {-1,-1}, {-1,-1}, {0,2}, {-1,-1}, {5,6}, {-1,-1} },
+//    { {5,6}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {3,6}, {-1,-1} }
+//};
+
+
+            int[,,] grid = new int[10, 10, 2]
+{
+    // Row 0
+    { {-1,-1}, {-1,-1}, {1,4}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+    // Row 1
+    { {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {2,2}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+    // Row 2
+    { {-1,-1}, {-1,-1}, {3,1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+    // Row 3
+    { {-1,-1}, {0,2}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+
+    // Row 4
+    { {-1,-1}, {-1,-1}, {-1,-1}, {5,5}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+    // Row 5
+    { {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {6,3}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+    // Row 6
+    { {-1,-1}, {-1,-1}, {-1,-1}, {4,3}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+
+    // Row 7
+    { {8,7}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} },
+    // Row 8
+    { {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {9,0}, {-1,-1}, {-1,-1} },
+    // Row 9
+    { {7,0}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1}, {-1,-1} }
+};
+
+
+
+
+            //List<List<int>> gridAdj = new List<List<int>>();
+
+            //Console.WriteLine(gridAdj.Capacity);
+
+
+            for (int i = 0; i < grid.GetLength(0); i++)
             {
-
-
-                new int[] { -1, -1, 03, -1, -1, -1, -1 },
-                new int[] { -1, 30, -1, -1, -1, -1, 46},
-                new int[] { -1, -1, -1, -1, -1, -1, -1 },
-                new int[] { 41, 11, -1, -1, -1, -1, -1 },
-                new int[] { -1, 31, -1, -1, -1, 16, 45 }
-
-            };
-
-            for (int i = 0; i < grid.Length; i++)
-            {
-                for(int j = 0; j < grid[0].Length; j++)
+                for (int j = 0; j < grid.GetLength(1); j++)
                 {
-                    if (grid[i][j] != -1)
+                    if (grid[i, j, 0] != -1 && grid[i, j, 1] != -1)
                     {
-                        
                         origin_row = i;
                         origin_col = j;
-                        Console.WriteLine("Origin: " + origin_row + ", " + origin_col);
-                        int num = grid[i][j];
-                        int column = num % 10;
-                        int row = num / 10;
-
-                        checkLoop(grid, row, column);
+                        checkLoop(grid, grid[i, j, 0], grid[i, j, 1]);
                     }
-                    
                 }
             }
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    Console.Write($"({grid[i, j, 0]},{grid[i, j, 1]}) ");
+                }
+                Console.WriteLine();
+            }
+
             Console.WriteLine("Unique Islands: " + uniqueIslands);
 
         }
@@ -80,3 +130,8 @@ namespace UniqueIslands
     }
 
 }
+
+       
+        
+
+       
